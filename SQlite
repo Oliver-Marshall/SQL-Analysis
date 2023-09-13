@@ -1,0 +1,55 @@
+-- Finding how many transactions took place in 2011 and 2012.
+
+SELECT
+    COUNT(*)
+FROM
+    Invoice
+WHERE
+    InvoiceDate BETWEEN '2011-01-01' AND '2012-12-31'
+
+
+-- Calculating how much money the company made during 2011 and 2012.
+
+SELECT
+    SUM(total)
+FROM
+    Invoice
+WHERE
+    InvoiceDate BETWEEN '2011-01-01' AND '2012-12-31'
+
+
+-- Displaying the customers name, and the total of all of their invoices from orders placed between 2011 and 2012.
+
+SELECT
+	c.FirstName AS Name, 
+	c.LastName AS Surname,
+	i.total
+FROM
+	Customer c
+INNER JOIN
+	Invoice I
+ON c.CustomerId = i.CustomerId
+WHERE
+	InvoiceDate BETWEEN '2011-01-01' AND '2012-12-31'
+ORDER BY
+	i.total DESC
+
+
+-- Displaying the customers name,  the total of all of their invoices, and the sales representatives name, from orders placed between 2011 and 2012.
+
+SELECT
+	c.FirstName || ' ' || c.LastName AS Customer,
+	e.FirstName || ' ' || e.LastName AS Employee,
+	i.total
+FROM
+	Customer c
+INNER JOIN
+	Employee e
+ON c.SupportRepId = e.EmployeeId
+INNER JOIN
+	Invoice I
+ON c.CustomerId = i.CustomerId
+WHERE
+	InvoiceDate BETWEEN '2011-01-01' AND '2012-12-31'
+ORDER BY
+	i.total DESC
